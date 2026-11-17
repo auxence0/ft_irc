@@ -15,3 +15,13 @@ server::server( int port, std::string& password): port_(port), password_(passwor
 	if (listen(serverSocket_, 21) == -1)
 		throw	std::runtime_error("Error: listen() failed");
 }
+
+void	server::run() {
+	std::vector<pollfd>	pollfds;
+
+	pollfds[0].fd = serverSocket_;
+	pollfds[0].events = POLLIN;
+	while (1) {
+		poll(&pollfds[0], pollfds.size(), 0);
+	}
+}
