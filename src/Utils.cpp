@@ -1,4 +1,4 @@
-#include "../include/Utils.hpp"
+#include "../inc/Utils.hpp"
 
 std::string	ircTolower(std::string const &s) {
 	if (s.empty())
