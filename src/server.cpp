@@ -12,5 +12,6 @@ server::server( int port, std::string& password): port_(port), password_(passwor
 	ServerAddr.sin_addr.s_addr = INADDR_ANY;
 	if (bind(serverSocket_, (struct sockaddr*)&ServerAddr, sizeof(ServerAddr)) == -1)
 		throw	std::runtime_error("Erorr: associate the socket with a local address and a port");
-	
+	if (listen(serverSocket_, 21) == -1)
+		throw	std::runtime_error("Error: listen() failed");
 }

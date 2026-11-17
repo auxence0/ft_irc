@@ -5,6 +5,8 @@
 # include <sys/socket.h>
 # include <exception>
 # include <stdexcept>
+# include <sys/types.h>
+# include <cstring>
 
 class	server {
 	public:
