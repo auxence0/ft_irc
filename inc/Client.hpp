@@ -3,23 +3,6 @@
 #include <string>
  class Client
  {
-	public :
-
-	private:
-		int			fd_;
-		std::string	nickName_;
-		std::string	userName_;
-		std::string	address_;
-		bool		hasPass_;
-		bool		isRegistered;
-		std::string	entryBuffer_;
-		std::string	exitBuffer_;
-		bool	toDisconnect_;
-		std::string	quitMsg_;
-
-		Client();
-		Client(Client const &src);
-		Client	&operator=(Client const &rhs);
 	public:
 		Client(int fd, std::string const &address);
 		~Client();
@@ -43,4 +26,20 @@
 		std::string			&getExitBuffer();
 		bool				isToDisconnect() const;
 		std::string const	&getQuitMsg() const;
+
+	private:
+		int			fd_;
+		std::string	nickName_;
+		std::string	userName_;
+		std::string	address_;
+		bool		hasPass_;
+		bool		isRegistered;
+		std::string	entryBuffer_;
+		std::string	exitBuffer_;
+		bool	toDisconnect_;
+		std::string	quitMsg_;
+
+		Client();
+		Client(Client const &src);
+		Client	&operator=(Client const &rhs);
 };
