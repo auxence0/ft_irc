@@ -57,5 +57,5 @@ class Channel
 		std::set<Client*>	invited_;
 		Channel();
 		Channel(Channel const &src);
-		Channel	&operator=(Client const &rhs);
+		Channel	&operator=(Channel const &rhs);
 };
