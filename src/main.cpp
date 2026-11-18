@@ -1,5 +1,5 @@
 
-# include <iostream>
+# include "../inc/server.hpp"
 # include <limits>
 
 bool	verif_port(char	*port) {
@@ -39,6 +39,7 @@ int	main(int ac, char **av) {
 		std::cerr << "Password is empty\n";
 		return 1;
 	}
-
+	server	serv(std::stoi(av[1]), av[2]);
+	serv.run();
 	return 0;
 }

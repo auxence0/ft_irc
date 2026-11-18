@@ -7,17 +7,23 @@
 # include <stdexcept>
 # include <sys/types.h>
 # include <cstring>
+# include <poll.h>
+# include <vector>
+# include <iostream>
 
 class	server {
 	public:
-		server(int port, std::string& passwrd);
-		server( const server& obj );
-		server&	operator=( const server& rhs );
+		server(int port, const std::string& passwrd);
 		~server();
+		void	run();
 
 	private:
+		server( const server& obj );
+		server&	operator=( const server& rhs );
 		server();
+		void		new_client();
 		int			port_;
 		std::string	password_;
 		int			serverSocket_;
+		std::vector<pollfd>	pollfds;
 };
