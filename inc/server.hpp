@@ -22,6 +22,7 @@ class	server {
 		server&	operator=( const server& rhs );
 		server();
 		void		new_client();
+		void		readData();
 		int			port_;
 		std::string	password_;
 		int			serverSocket_;

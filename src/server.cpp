@@ -1,4 +1,5 @@
 # include "../inc/server.hpp"
+# include "../inc/Client.hpp"
 
 server::server( int port, const std::string& password): port_(port), password_(password) {
 	serverSocket_ = socket(AF_INET, SOCK_STREAM, 0);
@@ -35,8 +36,11 @@ void	server::new_client() {
 		std::cerr << "Error: accept()\n";
 		return ;
 	}
-	std::cout << "Test connexion client\n";
 	pollfds.push_back(new_client);
+}
+
+void	server::readData() {
+
 }
 
 void	server::run() {
@@ -44,6 +48,9 @@ void	server::run() {
 		poll(&pollfds[0], pollfds.size(), 0);
 		if (pollfds[0].revents & POLLIN)
 			new_client();
-		
+		for (int i = 1; i < pollfds.size(); ++i) {
+			if (pollfds[i].revents & POLLIN)
+				readData();
+		}
 	}
 }
