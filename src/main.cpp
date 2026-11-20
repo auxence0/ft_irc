@@ -1,6 +1,7 @@
 
 # include "../inc/server.hpp"
 # include <limits>
+#include <cstdlib>
 
 bool	verif_port(char	*port) {
 	bool	has_int(false);
@@ -39,7 +40,7 @@ int	main(int ac, char **av) {
 		std::cerr << "Password is empty\n";
 		return 1;
 	}
-	server	serv(atoi(av[1]), av[2]);
+	server	serv(std::atoi(av[1]), av[2]);
 	serv.run();
 	return 0;
 }
