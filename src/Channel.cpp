@@ -49,6 +49,14 @@ std::string	Channel::getModeString() const {
 	return modes + params;
 }
 
+bool	Channel::getInviteOnly() const {
+	return this->inviteOnly_;
+}
+
+bool	Channel::getTopicLocked() const {
+	return this->topicLocked_;
+}
+
 void	Channel::setTopic(std::string const &topic, std::string const &setter) {
 	this->topic_ = topic;
 	this->topicSetter_ = setter;
@@ -125,4 +133,8 @@ bool	Channel::isEmpty() const {
 	if (this->members_.empty())
 		return true;
 	return false;
+}
+
+std::set<Client*> const	&Channel::getMembers() const {
+	return this->members_;
 }
