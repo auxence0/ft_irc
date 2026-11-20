@@ -11,7 +11,7 @@ std::string	RPL_WELCOME(std::string const &nickname, std::string const &prefix) 
 	return ":ircserv 001 " + name(nickname) + " :Welcome to the IRC Network, " + prefix;
 }
 
-std::string	RPL_YOURHOST(std::string const &srv,std::string const &nickname) {
+std::string	RPL_YOURHOST(std::string const &nickname) {
 	return ":ircserv 002 " + name(nickname) + " :Your host is ircserv, running version 1.0";
 }
 
