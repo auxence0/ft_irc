@@ -1,7 +1,6 @@
 # include "../inc/server.hpp"
-# include "../inc/Client.hpp"
 
-server::server( int port, const std::string& password): port_(port), password_(password) {
+server::server(int port, const std::string& password): port_(port), password_(password) {
 	serverSocket_ = socket(AF_INET, SOCK_STREAM, 0);
 	if (serverSocket_ == -1)
 		throw	std::runtime_error("Erorr: create socket");
@@ -27,9 +26,11 @@ server::server( int port, const std::string& password): port_(port), password_(p
 server::~server() {}
 
 void	server::new_client() {
-	pollfd	new_client;
+	pollfd		new_client;
+	sockaddr_in	tmp_sock;
+	socklen_t	len_sock = sizeof(tmp_sock);
 
-	new_client.fd = accept(serverSocket_, NULL, NULL);
+	new_client.fd = accept(serverSocket_, (struct sockaddr*)&tmp_sock, &len_sock);
 	new_client.events = POLLIN;
 	new_client.revents = 0;
 	if (new_client.fd == -1) {
@@ -37,10 +38,11 @@ void	server::new_client() {
 		return ;
 	}
 	pollfds.push_back(new_client);
+	clients.insert(std::pair<int, Client>(new_client.fd, Client(new_client.fd, "")));
 }
 
-void	server::readData() {
-
+void	server::readData(Client	client) {
+	
 }
 
 void	server::run() {
@@ -48,9 +50,9 @@ void	server::run() {
 		poll(&pollfds[0], pollfds.size(), 0);
 		if (pollfds[0].revents & POLLIN)
 			new_client();
-		for (int i = 1; i < pollfds.size(); ++i) {
+		for (size_t i = 1; i < pollfds.size(); ++i) {
 			if (pollfds[i].revents & POLLIN)
-				readData();
+				readData(clients[pollfds[i].fd]);
 		}
 	}
 }

@@ -4,7 +4,8 @@
  class Client
  {
 	public:
-		Client(int fd, std::string const &address);
+		Client(int fd, const std::string& address);
+		Client(Client const &obj);
 		~Client();
 
 		int					getFD() const;
@@ -40,6 +41,5 @@
 		std::string	quitMsg_;
 
 		Client();
-		Client(Client const &src);
 		Client	&operator=(Client const &rhs);
 };
