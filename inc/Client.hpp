@@ -34,7 +34,6 @@
 		std::string	userName_;
 		std::string	address_;
 		bool		hasPass_;
-		bool		isRegistered;
 		std::string	entryBuffer_;
 		std::string	exitBuffer_;
 		bool	toDisconnect_;

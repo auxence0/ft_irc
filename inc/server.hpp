@@ -9,15 +9,23 @@
 # include <cstdlib>
 # include <poll.h>
 # include <vector>
+# include <map> 
 # include <iostream>
 # include <map>
 # include "../inc/Client.hpp"
+
+class Channel;
+class Client;
 
 class	server {
 	public:
 		server(int port, const std::string& passwrd);
 		~server();
 		void	run();
+		std::map<std::string, Channel*> const	&getChannels() const;
+		Channel	*getChannel(std::string const &channelName);
+		void	quitAllChannel(Client *client);
+		void	generalMsg(std::string const &msg, Client *client);
 
 	private:
 		server( const server& obj );
