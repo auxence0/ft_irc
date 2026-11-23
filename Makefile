@@ -11,6 +11,7 @@ SRC = 	src/Channel.cpp\
 		src/cmd_channel.cpp\
 		src/cmd_message.cpp\
 		src/cmd_oper.cpp\
+		src/cmd_register.cpp\
 		src/Dispatch.cpp\
 		src/main.cpp\
 		src/Replies.cpp\
