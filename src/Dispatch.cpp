@@ -21,14 +21,16 @@ void	dispathCommand(server &serv, Client &client, Message &msg) {
 		commands["QUIT"] = cmd_quit;
 	}
 
-	std::map<std::string, CommandHandler>::iterator it = commands.find(msg.command);
-	if (it == commands.end()) {
-		client.enqueue(ERR_UNKNOWNCOMMAND(client.getNickname(), msg.command));
+	if (msg.command.empty())
 		return;
-	}
 	if (!client.isRegistered() && (msg.command != "PASS" && msg.command != "NICK" && msg.command != "USER" &&
 		msg.command != "CAP" && msg.command != "QUIT")) {
 		client.enqueue(ERR_NOTREGISTERED(client.getNickname()));
+		return;
+	}
+	std::map<std::string, CommandHandler>::iterator it = commands.find(msg.command);
+	if (it == commands.end()) {
+		client.enqueue(ERR_UNKNOWNCOMMAND(client.getNickname(), msg.command));
 		return;
 	}
 	else
