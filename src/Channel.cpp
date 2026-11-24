@@ -80,44 +80,64 @@ void	Channel::setTopicLocked(bool status) {
 }
 
 void	Channel::addMember(Client *client) {
+	if (!client)
+		return;
 	this->members_.insert(client);
 }
 
 void	Channel::removeMember(Client *client) {
+	if (!client)
+		return;
 	this->members_.erase(client);
 	this->demote(client);
 	this->removeInvite(client);
 }
 
 bool	Channel::isMember(Client *client) const {
+	if (!client)
+		return false;
 	if (this->members_.find(client) != this->members_.end())
 		return true;
 	return false;
 }
 
 void	Channel::promote(Client *client) {
+	if (!client)
+		return;
+	if (!isMember(client))
+		return;
 	this->operators_.insert(client);
 }
 
 void	Channel::demote(Client *client) {
+	if (!client)
+		return;
 	this->operators_.erase(client);
 }
 
 bool	Channel::isOperator(Client *client) const {
+	if (!client)
+		return false;
 	if (this->operators_.find(client) != this->operators_.end())
 		return true;
 	return false;
 }
 
 void	Channel::invite(Client *client) {
+	if (!client)
+		return;
 	this->invited_.insert(client);
 }
 
 void	Channel::removeInvite(Client *client) {
+	if (!client)
+		return;
 	this->invited_.erase(client);
 }
 
 bool	Channel::isInvited(Client *client) const {
+	if (!client)
+		return false;
 	if (this->invited_.find(client) != this->invited_.end())
 		return true;
 	return false;

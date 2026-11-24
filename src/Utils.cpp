@@ -6,8 +6,8 @@ std::string	ircTolower(std::string const &s) {
 	std::string	res;
 
 	for(size_t i = 0; i < s.length(); i++) {
-		if (std::isupper(s[i]))
-			res.push_back(std::tolower(s[i]));
+		if (std::isupper(static_cast<unsigned char>(s[i])))
+			res.push_back(std::tolower(static_cast<unsigned char>(s[i])));
 		else if (s[i] == '[' || s[i] == ']' || s[i] == '\\' || s[i] == '^')
 			res.push_back(s[i] + 32);
 		else
@@ -40,7 +40,8 @@ std::string	trim(std::string const &str) {
 	return (str.substr(start, end - start + 1));
 }
 
-std::string	toString(int n) {
+template <typename T>
+std::string	toString(T n) {
 	std::ostringstream	res;
 	res << n;
 	return res.str();

@@ -45,15 +45,15 @@ std::string	RPL_NAMREPLY(std::string const &nickname, std::string const &channel
 }
 
 std::string	RPL_ENDOFNAMES(std::string const &nickname, std::string const &channel) {
-	return ":ircserv 366 " + name(nickname) + " " + channel + " :End of  /NAMES list";
+	return ":ircserv 366 " + name(nickname) + " " + channel + " :End of /NAMES list";
 }
 
 std::string	ERR_NOSUCHNICK(std::string const &nickname, std::string const &target) {
-	return ":ircserv 401 " + name(nickname) + " " + target + " :No such server";
+	return ":ircserv 401 " + name(nickname) + " " + target + " :No such nick/channel";
 }
 
 std::string	ERR_NOSUCHCHANNEL(std::string const &nickname,std::string const &channel) {
-	return ":ircserv 403 " + name(nickname) + " " + channel + ":No such channel";
+	return ":ircserv 403 " + name(nickname) + " " + channel + " :No such channel";
 }
 
 std::string	ERR_CANNOTSENDTOCHAN(std::string const &nickname, std::string const &channel) {
@@ -93,7 +93,7 @@ std::string	ERR_NOTONCHANNEL(std::string const &nickname, std::string const &cha
 }
 
 std::string	ERR_USERONCHANNEL(std::string const &nickname, std::string const &target, std::string const &channel) {
-	return ":ircserv 443 " + name(nickname) + " " + target + " " + channel + " is already on channel";
+	return ":ircserv 443 " + name(nickname) + " " + target + " " + channel + " :is already on channel";
 }
 
 std::string	ERR_NOTREGISTERED(std::string const &nickname) {
@@ -101,7 +101,7 @@ std::string	ERR_NOTREGISTERED(std::string const &nickname) {
 }
 
 std::string	ERR_NEEDMOREPARAMS(std::string const &nickname, std::string const &command) {
-	return ":ircserv 461 " + name(nickname) + " " + command + " Not enough parameters";
+	return ":ircserv 461 " + name(nickname) + " " + command + " :Not enough parameters";
 }
 
 std::string	ERR_ALREADYREGISTERED(std::string const &nickname) {
@@ -113,7 +113,7 @@ std::string	ERR_PASSWDMISMATCH(std::string const &nickname) {
 }
 
 std::string	ERR_CHANNELISFULL(std::string const &nickname, std::string const &channel) {
-	return ":ircserv 471 " + name(nickname) + " " + channel + " :Cannot join channel (+1)";
+	return ":ircserv 471 " + name(nickname) + " " + channel + " :Cannot join channel (+l)";
 }
 
 std::string	ERR_UNKNOWNMODE(std::string const &nickname, std::string const &modechar) {
