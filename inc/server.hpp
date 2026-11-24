@@ -12,6 +12,7 @@
 # include <map> 
 # include <iostream>
 # include <map>
+# include <sstream>
 # include "../inc/Client.hpp"
 
 class Channel;
@@ -25,14 +26,15 @@ class	server {
 		std::map<std::string, Channel*> const	&getChannels() const;
 		Channel	*getChannel(std::string const &channelName);
 		void	quitAllChannel(Client *client);
-		void	generalMsg(std::string const &msg, Client *client);
 
 	private:
 		server( const server& obj );
 		server&	operator=( const server& rhs );
 		server();
 		void		new_client();
-		void		readData(Client client);
+		void		readData(Client& client);
+		void		handleCommand(const std::string& msg, Client& client);
+		void		handlePass(const std::string& password, Client& client);
 		int			port_;
 		std::string	password_;
 		int			serverSocket_;
