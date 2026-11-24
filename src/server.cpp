@@ -1,5 +1,6 @@
 # include "../inc/server.hpp"
 
+/// @brief initialisation du server
 server::server(int port, const std::string& password): port_(port), password_(password) {
 	serverSocket_ = socket(AF_INET, SOCK_STREAM, 0);
 	if (serverSocket_ == -1)
@@ -25,6 +26,7 @@ server::server(int port, const std::string& password): port_(port), password_(pa
 
 server::~server() {}
 
+/// @brief Creation d'un client venant d'etre ajoute 
 void	server::new_client() {
 	pollfd		new_client;
 	sockaddr_in	tmp_sock;
@@ -41,18 +43,68 @@ void	server::new_client() {
 	clients.insert(std::pair<int, Client>(new_client.fd, Client(new_client.fd, "")));
 }
 
-void	server::readData(Client	client) {
-	
+
+/// @brief Verification du mot de passe entre par le client
+void	server::handlePass(const std::string& msg, Client& client) {
+	if (client.hasPass() == true)
+		return ;
+	std::istringstream	iss(msg.substr(4));
+	std::string	password;
+
+	iss >> std::ws;
+	std::getline(iss, password);
+	if (password == password_)
+		client.setPass(true);
 }
 
+/// @brief recuperation de la cmd trouver par readData pour la traiter
+void	server::handleCommand(const std::string& msg, Client& client) {
+	std::string	cmd;
+	std::istringstream	iss(msg);
+
+	iss >> cmd;
+	if (cmd == "PASS")
+		handlePass(msg, client);
+	std::cout << "Fonctionne ? : " << client.hasPass() << "\n";
+}
+
+/// @brief Sert a lire les donnees entree et les recuperer via le socket voulu
+void	server::readData(Client& client) {
+	char	read_buffer[100];
+	ssize_t	bytes_read(0);
+	bytes_read = recv(client.getFD(), read_buffer, 100, 0);
+	if (bytes_read == -1) {
+		std::cerr << "Error: recv failed()\n";
+		return ;
+	}
+	std::string&	new_buffer = client.getEntryBuffer();
+	if (bytes_read > 0)
+		new_buffer.append(read_buffer, bytes_read);
+	size_t	find_end_cmd(0);
+	while (1) {
+		find_end_cmd = new_buffer.find("\r\n");
+		if (find_end_cmd == std::string::npos)
+			return ;
+		handleCommand(new_buffer.substr(0, find_end_cmd), client);
+		new_buffer.erase(0, find_end_cmd + 2);
+	}
+}
+
+/// @brief boucle principal en attente de donnees par poll()
 void	server::run() {
+	std::map<int, Client>::iterator it;
 	while (1) {
 		poll(&pollfds[0], pollfds.size(), 0);
 		if (pollfds[0].revents & POLLIN)
 			new_client();
 		for (size_t i = 1; i < pollfds.size(); ++i) {
-			if (pollfds[i].revents & POLLIN)
-				readData(clients[pollfds[i].fd]);
+			if (pollfds[i].revents & POLLIN) {
+				it = clients.find(pollfds[i].fd);
+				if (it != clients.end()) {
+				std::cout << "test\n";
+					readData(it->second);
+				}
+			}
 		}
 	}
 }
