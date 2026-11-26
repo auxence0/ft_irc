@@ -23,3 +23,11 @@ bool	Client::hasPass() const {
 void	Client::setPass(bool status) {
 	hasPass_ = status;
 }
+
+void	Client::setNickname(const std::string& nickname) {
+	nickName_ = nickname;
+}
+
+const std::string&	Client::getNickname() const {
+	return nickName_;
+}

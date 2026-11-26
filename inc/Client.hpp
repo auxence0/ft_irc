@@ -16,12 +16,12 @@
 		const std::string&	getAddress() const;
 		const std::string&	getPrefix() const;
 		
-		void				setNickname(std::string const &nickname);
-		void				setUsername(std::string const &user);
+		void				setNickname(const std::string& nickname);
+		void				setUsername(const std::string& user);
 		void				setPass(bool status);
 
-		void				enqueue(std::string const &line);
-		void				requestDisconnect(std::string const &quitMsg);
+		void				enqueue(const std::string& line);
+		void				requestDisconnect(const std::string& quitMsg);
 
 		std::string&		getEntryBuffer();
 		std::string&		getExitBuffer();
