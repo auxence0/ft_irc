@@ -1,12 +1,3 @@
-#pragma once
-
-# include <string>
-# include <netinet/in.h>
-# include <sys/socket.h>
-# include <exception>
-# include <stdexcept>
-# include <sys/types.h>
-# include <cstdlib>
 # include <poll.h>
 # include <vector>
 # include <map> 
@@ -14,6 +5,8 @@
 # include <map>
 # include <sstream>
 # include "../inc/Client.hpp"
+# include "../inc/Channel.hpp"
+# include "../inc/Utils.hpp"
 
 class Channel;
 class Client;
@@ -26,6 +19,9 @@ class	server {
 		std::map<std::string, Channel*> const	&getChannels() const;
 		Channel	*getChannel(std::string const &channelName);
 		void	quitAllChannel(Client *client);
+		Channel    *createChannel(std::string const &channelName);
+        void    removeChannel(std::string const &channelName);
+        Client    *getClientNickname(std::string const &nickName);
 
 	private:
 		server( const server& obj );
@@ -33,11 +29,10 @@ class	server {
 		server();
 		void		new_client();
 		void		readData(Client& client);
-		void		handleCommand(const std::string& msg, Client& client);
-		void		handlePass(const std::string& password, Client& client);
 		int			port_;
 		std::string	password_;
 		int			serverSocket_;
 		std::vector<pollfd>		pollfds;
 		std::map<int, Client>	clients;
+        std::map<std::string, Channel*>    channels_;
 };
